@@ -1,6 +1,7 @@
 package com.example.coursesapp.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.coursesapp.HomeActivity;
+import com.example.coursesapp.MainActivity;
 import com.example.coursesapp.R;
 import com.example.coursesapp.databinding.FragmentSignUpBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -112,14 +115,13 @@ public class SignUpFragment extends Fragment {
                         FirebaseUser fbUser = fbAuth.getCurrentUser();
                         String email = fbUser.getEmail();
                         Toast.makeText(requireContext(), "Account created"+email, Toast.LENGTH_SHORT).show();
-                        
-
+                        startActivity(new Intent(requireActivity(), HomeActivity.class));
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-
+                        progressDialog.dismiss();
                         Toast.makeText(requireActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
