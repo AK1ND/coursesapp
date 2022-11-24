@@ -1,35 +1,37 @@
 package com.example.coursesapp;
 
-import android.view.View;
-import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class ViewPagerAdapter extends RecyclerView.Adapter<ViewPagerAdapter.ViewHolder> {
+import com.example.coursesapp.fragments.CatalogFragment;
+import com.example.coursesapp.fragments.HomeFragment;
+
+public class ViewPagerAdapter extends FragmentStateAdapter {
+
+
+    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
+    }
 
     @NonNull
     @Override
-    public ViewPagerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewPagerAdapter.ViewHolder holder, int position) {
-
+    public Fragment createFragment(int position) {
+        switch (position) {
+            case 0:
+                return new HomeFragment();
+            case 1:
+                return new CatalogFragment();
+            case 2:
+                return new NotificationsFragment();
+            default:
+                return new ProfileFragment();
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
+        return 4;
     }
 }

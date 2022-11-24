@@ -12,4 +12,11 @@
     <string name="title_notifications">Notifications</string>
     <string name="home">Home</string>
     <string name="catalog">Catalog</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="settings">Settings</string>
 </resources>

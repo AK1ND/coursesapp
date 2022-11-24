@@ -3,41 +3,42 @@ package com.example.coursesapp.fragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.coursesapp.HomeActivity;
-import com.example.coursesapp.MainActivity;
 import com.example.coursesapp.R;
+import com.example.coursesapp.User;
 import com.example.coursesapp.databinding.FragmentSignUpBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.time.temporal.Temporal;
+import java.util.Objects;
 
 public class SignUpFragment extends Fragment {
 
     private FragmentSignUpBinding bind;
 
     private FirebaseAuth fbAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference users;
+
 
     private ProgressDialog progressDialog;
 
-    private String email = "", password="";
+    private String email = "", password = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,17 +53,24 @@ public class SignUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fbAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance("https://courses-app-7fc2b-default-rtdb.europe-west1.firebasedatabase.app");
+        users = firebaseDatabase.getReference("Users");
 
-        progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setTitle("Please wait");
-        progressDialog.setMessage("Creating your account");
-        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog();
 
         buttonsClicks();
     }
 
 
-    private void buttonsClicks(){
+    private void progressDialog() {
+        progressDialog = new ProgressDialog(requireContext());
+        progressDialog.setTitle("Please wait");
+        progressDialog.setMessage("Creating your account");
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
+
+
+    private void buttonsClicks() {
         bind.textLogInSignUpFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,16 +97,13 @@ public class SignUpFragment extends Fragment {
         email = bind.etEmailSignUpFragment.getText().toString().trim();
         password = bind.etPasswordSighUpFragment.getText().toString().trim();
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             bind.etEmailSignUpFragment.setError("Invalid email format");
-        }
-        else if (TextUtils.isEmpty(password)){
-            bind.etPasswordSighUpFragment.setText("Enter password");
-        }
-        else if (password.length()<6){
-            bind.etPasswordSighUpFragment.setText("Password must be more than 6 characters");
-        }
-        else {
+        } else if (TextUtils.isEmpty(password)) {
+            bind.etPasswordSighUpFragment.setHint("Enter password");
+        } else if (password.length() < 6) {
+            Toast.makeText(requireContext(), "Password 6+ sm", Toast.LENGTH_SHORT).show();
+        } else {
             firebaseSignUp();
         }
     }
@@ -112,9 +117,14 @@ public class SignUpFragment extends Fragment {
                     public void onSuccess(AuthResult authResult) {
                         progressDialog.dismiss();
 
-                        FirebaseUser fbUser = fbAuth.getCurrentUser();
-                        String email = fbUser.getEmail();
-                        Toast.makeText(requireContext(), "Account created"+email, Toast.LENGTH_SHORT).show();
+                        User user = new User();
+                        user.setName(bind.etNameSignUpFragment.getText().toString());
+
+                        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                                .setValue(user);
+
+
+                        Toast.makeText(requireContext(), "Account created" + email, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(requireActivity(), HomeActivity.class));
                     }
                 })
@@ -122,7 +132,7 @@ public class SignUpFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         progressDialog.dismiss();
-                        Toast.makeText(requireActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
