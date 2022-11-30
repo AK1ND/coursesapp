@@ -119,12 +119,13 @@ public class SignUpFragment extends Fragment {
 
                         User user = new User();
                         user.setName(bind.etNameSignUpFragment.getText().toString());
+//                        user.setEmail(bind.etEmailSignUpFragment.getText().toString());
 
                         users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
                                 .setValue(user);
 
 
-                        Toast.makeText(requireContext(), "Account created" + email, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Account created " + email, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(requireActivity(), HomeActivity.class));
                     }
                 })

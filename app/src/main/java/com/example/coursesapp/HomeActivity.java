@@ -34,9 +34,9 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }).attach();
 
-        bind.tabs.getTabAt(0).setIcon(R.drawable.home_24);
-        bind.tabs.getTabAt(1).setIcon(R.drawable.catalog_24);
-        bind.tabs.getTabAt(2).setIcon(R.drawable.notifications_24);
+        bind.tabs.getTabAt(0).setIcon(R.drawable.ic_home_black_24dp);
+        bind.tabs.getTabAt(1).setIcon(R.drawable.ic_dashboard_black_24dp);
+        bind.tabs.getTabAt(2).setIcon(R.drawable.ic_notifications_black_24dp);
         bind.tabs.getTabAt(3).setIcon(R.drawable.profile_24);
 
 

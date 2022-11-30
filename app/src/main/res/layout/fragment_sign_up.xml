@@ -10,10 +10,13 @@
         android:id="@+id/text_sign_up_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/sign_up"
         android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,9 +35,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
+        android:fontFamily="@font/inter_medium"
         android:text="@string/login"
         android:textColor="@color/teal_200"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/text_sign_up_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_sign_up_fragment" />
@@ -44,9 +48,11 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
         android:background="#E4DBDB"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_sign_up_fragment" />
 
@@ -58,8 +64,10 @@
         android:layout_marginTop="160dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/roundededittext"
+        android:fontFamily="@font/inter_medium"
         android:hint="Name"
         android:paddingStart="12dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_sign_up_fragment" />
@@ -72,9 +80,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/roundededittext"
+        android:fontFamily="@font/inter_medium"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:paddingStart="12dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/et_name_sign_up_fragment"
         app:layout_constraintStart_toStartOf="@id/et_name_sign_up_fragment"
         app:layout_constraintTop_toBottomOf="@id/et_name_sign_up_fragment" />
@@ -87,8 +97,10 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/roundededittext"
+        android:fontFamily="@font/inter_medium"
         android:hint="Password"
         android:paddingStart="12dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/et_email_sign_up_fragment"
         app:layout_constraintStart_toStartOf="@id/et_email_sign_up_fragment"
         app:layout_constraintTop_toBottomOf="@id/et_email_sign_up_fragment" />
@@ -101,9 +113,11 @@
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="200dp"
         android:background="@drawable/roundedbutton"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/sign_up"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
