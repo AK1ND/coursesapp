@@ -79,5 +79,19 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 });
+        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("email")
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d("AAA", "Error");
+
+                        } else {
+                            bind.tvEmail.setText((CharSequence) task.getResult().getValue());
+                            Log.d("AAA", String.valueOf(task.getResult().getValue()));
+                        }
+                    }
+                });
     }
+
 }
