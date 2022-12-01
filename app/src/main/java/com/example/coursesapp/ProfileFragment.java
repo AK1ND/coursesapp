@@ -24,6 +24,8 @@ import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
+    String TAG = "profileFragmentLog";
+
     private FragmentProfileBinding bind;
 
     private FirebaseAuth firebaseAuth;
@@ -66,18 +68,35 @@ public class ProfileFragment extends Fragment {
 
 
     private void getData() {
-        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("name")
+
+        users = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+
+
+        users.child("name")
                 .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (!task.isSuccessful()) {
-                            Log.d("AAA", "Error");
+
+                            Log.d(TAG, "Error");
 
                         } else {
                             bind.tvName.setText((CharSequence) task.getResult().getValue());
-                            Log.d("AAA", String.valueOf(task.getResult().getValue()));
+                        }
+                    }
+                });
+        users.child("email")
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.d(TAG, "Error");
+
+                        } else {
+                            bind.tvEmail.setText((CharSequence) task.getResult().getValue());
                         }
                     }
                 });
     }
+
 }

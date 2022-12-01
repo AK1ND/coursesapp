@@ -32,7 +32,6 @@ public class SignUpFragment extends Fragment {
     private FragmentSignUpBinding bind;
 
     private FirebaseAuth fbAuth;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference users;
 
 
@@ -41,7 +40,7 @@ public class SignUpFragment extends Fragment {
     private String email = "", password = "";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bind = FragmentSignUpBinding.inflate(inflater, container, false);
         // Inflate the layout for this fragment
@@ -53,7 +52,7 @@ public class SignUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         fbAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance("https://courses-app-7fc2b-default-rtdb.europe-west1.firebasedatabase.app");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://courses-app-7fc2b-default-rtdb.europe-west1.firebasedatabase.app");
         users = firebaseDatabase.getReference("Users");
 
         progressDialog();
@@ -71,26 +70,15 @@ public class SignUpFragment extends Fragment {
 
 
     private void buttonsClicks() {
-        bind.textLogInSignUpFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogInFragment()).commit();
-            }
-        });
+        bind.textLogInSignUpFragment.setOnClickListener(view ->
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new LogInFragment()).commit());
 
-        bind.imgButtonCloseSignUpFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
-            }
-        });
+        bind.imgButtonCloseSignUpFragment.setOnClickListener(view ->
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MainFragment()).commit());
 
-        bind.buttonLogInFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validateData();
-            }
-        });
+        bind.buttonLogInFragment.setOnClickListener(view -> validateData());
     }
 
     private void validateData() {
@@ -112,29 +100,24 @@ public class SignUpFragment extends Fragment {
 
         progressDialog.show();
         fbAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        progressDialog.dismiss();
+                .addOnSuccessListener(authResult -> {
+                    progressDialog.dismiss();
 
-                        User user = new User();
-                        user.setName(bind.etNameSignUpFragment.getText().toString());
-//                        user.setEmail(bind.etEmailSignUpFragment.getText().toString());
-
-                        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-                                .setValue(user);
+                    User user = new User();
+                    user.setName(bind.etNameSignUpFragment.getText().toString());
+                    user.setEmail(bind.etEmailSignUpFragment.getText().toString());
 
 
-                        Toast.makeText(requireContext(), "Account created " + email, Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(requireActivity(), HomeActivity.class));
-                    }
+                    users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                            .setValue(user);
+
+
+                    Toast.makeText(requireContext(), "Account created " + email, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(requireActivity(), HomeActivity.class));
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Toast.makeText(requireActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(e -> {
+                    progressDialog.dismiss();
+                    Toast.makeText(requireActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
 
     }
