@@ -117,7 +117,7 @@ public class SignUpFragment extends Fragment {
                     public void onSuccess(AuthResult authResult) {
                         progressDialog.dismiss();
 
-                        User user = new User(null,email);
+                        User user = new User(null, email);
                         user.setName(bind.etNameSignUpFragment.getText().toString());
 
                         users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
