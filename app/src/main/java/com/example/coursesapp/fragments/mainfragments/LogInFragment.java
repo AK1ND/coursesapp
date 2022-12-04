@@ -1,4 +1,4 @@
-package com.example.coursesapp.fragments;
+package com.example.coursesapp.fragments.mainfragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;

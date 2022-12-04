@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coursesapp.fragments.MainFragment;
+import com.example.coursesapp.fragments.mainfragments.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
 

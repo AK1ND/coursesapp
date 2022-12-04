@@ -1,4 +1,4 @@
-package com.example.coursesapp;
+package com.example.coursesapp.fragments.homefragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.coursesapp.HomeActivity;
+import com.example.coursesapp.MainActivity;
 import com.example.coursesapp.databinding.FragmentProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -24,23 +26,29 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
+import java.util.Random;
 
 
 public class ProfileFragment extends Fragment {
 
-    String TAG = "profileFragmentLog";
-    ActivityResultLauncher<String> getPhoto;
     private FragmentProfileBinding bind;
+
+    private final String TAG = "profileFragmentLog";
+    private ActivityResultLauncher<String> getPhoto;
     private FirebaseAuth firebaseAuth;
     private StorageReference storageReference;
     private DatabaseReference users;
     private Uri imageUri;
+
+    private HomeActivity homeActivity;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         bind = FragmentProfileBinding.inflate(inflater, container, false);
+
+        homeActivity = (HomeActivity) getActivity();
         getPhoto = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 result -> {
@@ -76,7 +84,7 @@ public class ProfileFragment extends Fragment {
         String substr = "Users/";
         userID = userID.substring(userID.indexOf(substr) + substr.length());
         Log.d(TAG, "initVars:" + userID);
-        storageReference = FirebaseStorage.getInstance().getReference().child(userID);
+        storageReference = FirebaseStorage.getInstance().getReference().child("userprofile/"+userID);
 
     }
 
@@ -88,6 +96,10 @@ public class ProfileFragment extends Fragment {
         });
 
         bind.imageProfile.setOnClickListener(view -> getPhoto.launch("image/*"));
+
+        bind.buttonAdminPanel.setOnClickListener(view -> {
+            homeActivity.initViewPagerAdmin();
+        });
     }
 
 
@@ -129,6 +141,17 @@ public class ProfileFragment extends Fragment {
                 .addOnSuccessListener(bytes -> {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     bind.imageProfile.setImageBitmap(bitmap);
+                });
+
+        users.child("admin")
+                .get().addOnCompleteListener(task -> {
+                   if (!task.isSuccessful()){
+                       Log.d(TAG, "Error");
+                   } else if (!((Boolean) task.getResult().getValue())){
+                       Log.d(TAG, "It's not admin");
+                   } else {
+                       bind.buttonAdminPanel.setVisibility(View.VISIBLE);
+                   }
                 });
     }
 
