@@ -1,4 +1,4 @@
-package com.example.coursesapp;
+package com.example.coursesapp.fragments.homefragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

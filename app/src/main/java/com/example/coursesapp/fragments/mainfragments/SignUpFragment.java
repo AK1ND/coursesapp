@@ -1,4 +1,4 @@
-package com.example.coursesapp.fragments;
+package com.example.coursesapp.fragments.mainfragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -103,6 +103,7 @@ public class SignUpFragment extends Fragment {
                     User user = new User();
                     user.setName(bind.etNameSignUpFragment.getText().toString());
                     user.setEmail(bind.etEmailSignUpFragment.getText().toString());
+                    user.setAdmin(false);
 
 
                     users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())

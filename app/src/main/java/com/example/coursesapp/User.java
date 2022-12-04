@@ -5,16 +5,16 @@ import android.net.Uri;
 public class User {
     private String name;
     private String email;
-    private Uri image;
+    private Boolean admin;
 
     public User() {
     }
 
-    public User(String name, String email, Uri image) {
-        this.name = name;
-        this.email = email;
-        this.image = image;
-    }
+//    public User(String name, String email, Boolean admin) {
+//        this.name = name;
+//        this.email = email;
+//        this.admin = admin;
+//    }
 
     public String getName() {
         return name;
@@ -33,11 +33,7 @@ public class User {
     }
 
 
-    public Uri getImage() {
-        return image;
-    }
+    public Boolean getAdmin() { return admin; }
 
-    public void setImage(Uri image) {
-        this.image = image;
-    }
+    public void setAdmin(Boolean admin) { this.admin = admin; }
 }

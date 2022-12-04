@@ -22,4 +22,16 @@
     <string name="favorites">Favorites</string>
     <string name="filter">Filter</string>
     <string name="name">Name</string>
+    <string name="admin_panel">admin panel</string>
+    <string name="enter_name_of_the_course">Enter name of the course</string>
+    <string name="enter_description">Enter description</string>
+    <string name="add_to_course">Add to course</string>
+
+    <string-array name="coursesThemes">
+        <item>Math</item>
+        <item>Eng</item>
+        <item>Psycho</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>

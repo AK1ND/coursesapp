@@ -2,12 +2,11 @@ package com.example.coursesapp;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coursesapp.databinding.ActivityHomeBinding;
-import com.google.android.material.tabs.TabLayout;
+import com.example.coursesapp.viewpageradapters.ViewPagerAdapter;
+import com.example.coursesapp.viewpageradapters.ViewPagerAdapterAdmin;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class HomeActivity extends AppCompatActivity {
@@ -15,33 +14,46 @@ public class HomeActivity extends AppCompatActivity {
 
     private ActivityHomeBinding bind;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bind = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(bind.getRoot());
 
+        initViewPager();
+
+
+    }
+
+
+    public void initViewPager(){
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
 
         bind.viewPager2.setAdapter(adapter);
 
         new TabLayoutMediator(bind.tabs, bind.viewPager2,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                    }
+                (tab, position) -> {
                 }).attach();
 
         bind.tabs.getTabAt(0).setIcon(R.drawable.ic_home_black_24dp);
         bind.tabs.getTabAt(1).setIcon(R.drawable.ic_dashboard_black_24dp);
         bind.tabs.getTabAt(2).setIcon(R.drawable.ic_notifications_black_24dp);
         bind.tabs.getTabAt(3).setIcon(R.drawable.profile_24);
+    }
 
+    public void initViewPagerAdmin(){
+        ViewPagerAdapterAdmin adapter = new ViewPagerAdapterAdmin(this);
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_homeActivity, new HomeFragment()).commit();
+        bind.viewPager2.setAdapter(adapter);
 
+        new TabLayoutMediator(bind.tabs, bind.viewPager2,
+                (tab, position) -> {
+                }).attach();
+
+        bind.tabs.getTabAt(0).setIcon(R.drawable.ic_notifications_black_24dp);
+        bind.tabs.getTabAt(1).setIcon(R.drawable.ic_dashboard_black_24dp);
+        bind.tabs.getTabAt(2).setIcon(R.drawable.profile_24);
 
     }
 }
