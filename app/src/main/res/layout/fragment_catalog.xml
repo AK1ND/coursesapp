@@ -7,7 +7,6 @@
     tools:context=".fragments.homefragments.CatalogFragment">
 
 
-
     <TextView
         android:id="@+id/text_home_fragment"
         android:layout_width="wrap_content"
@@ -37,7 +36,6 @@
         app:layout_constraintTop_toTopOf="@+id/text_home_fragment" />
 
 
-
     <EditText
         android:id="@+id/search"
         android:layout_width="match_parent"
@@ -47,7 +45,7 @@
         android:layout_marginEnd="20dp"
         android:background="@drawable/roundedsearch"
         android:fontFamily="@font/inter_medium"
-        android:hint="Search"
+        android:hint="@string/search"
         android:paddingStart="12dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,5 +53,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_home_fragment" />
 
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

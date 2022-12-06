@@ -1,4 +1,4 @@
-package com.example.coursesapp.viewpageradapters;
+package com.example.coursesapp.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,5 +34,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     }
 
     @Override
-    public int getItemCount() { return 4; }
+    public int getItemCount() {
+        return 4;
+    }
 }

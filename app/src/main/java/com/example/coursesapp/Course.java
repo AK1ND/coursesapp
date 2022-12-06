@@ -1,12 +1,16 @@
 package com.example.coursesapp;
 
+import com.google.firebase.database.Exclude;
+
 public class Course {
+
+    @Exclude
     private String id;
     private String name;
     private String theme;
     private String description;
 
-    public Course(){
+    public Course() {
 
     }
 
@@ -16,7 +20,6 @@ public class Course {
         this.theme = theme;
         this.description = description;
     }
-
 
 
     public String getId() {

@@ -26,6 +26,9 @@
     <string name="enter_name_of_the_course">Enter name of the course</string>
     <string name="enter_description">Enter description</string>
     <string name="add_to_course">Add to course</string>
+    <string name="course_name">Course Name</string>
+    <string name="course_description">Course Description</string>
+    <string name="search">Search</string>
 
     <string-array name="coursesThemes">
         <item>Math</item>
