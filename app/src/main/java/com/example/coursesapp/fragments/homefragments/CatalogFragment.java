@@ -28,12 +28,12 @@ import java.util.ArrayList;
 
 public class CatalogFragment extends Fragment {
 
-    ArrayList<Course> list;
+
     private FragmentCatalogBinding bind;
     private DatabaseReference databaseReference;
     private CatalogAdapter adapter;
     private RecyclerView recyclerView;
-
+    ArrayList<Course> list;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,11 +45,11 @@ public class CatalogFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = bind.recyclerView;
+        recyclerView = bind.recyclerViewCatalog;
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Courses");
         recyclerView.setHasFixedSize(true);
-        bind.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        bind.recyclerViewCatalog.setLayoutManager(new LinearLayoutManager(requireContext()));
 
 
         bind.scrollView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
