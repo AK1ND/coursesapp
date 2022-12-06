@@ -114,6 +114,7 @@ public class CreateCourseAdminFragment extends Fragment {
         Course course = new Course();
 
         course.setName(bind.etCourseName.getText().toString());
+        course.setId(idCourse);
         course.setTheme(bind.spinner.getSelectedItem().toString());
         course.setDescription(bind.etDescription.getText().toString());
 
@@ -132,7 +133,7 @@ public class CreateCourseAdminFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference().child("coursesimages/" + idCourse);
 
         if (checkFillFields()) {
-//            uploadImg();
+            uploadImg();
             uploadData();
         } else {
             Toast.makeText(requireContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();

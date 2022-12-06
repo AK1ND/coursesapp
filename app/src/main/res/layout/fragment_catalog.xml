@@ -54,7 +54,6 @@
         app:layout_constraintTop_toBottomOf="@+id/text_home_fragment" />
 
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
