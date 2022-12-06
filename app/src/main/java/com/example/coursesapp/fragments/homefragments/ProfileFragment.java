@@ -26,14 +26,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
-import java.util.Random;
 
 
 public class ProfileFragment extends Fragment {
 
-    private FragmentProfileBinding bind;
-
     private final String TAG = "profileFragmentLog";
+    private FragmentProfileBinding bind;
     private ActivityResultLauncher<String> getPhoto;
     private FirebaseAuth firebaseAuth;
     private StorageReference storageReference;
@@ -84,7 +82,7 @@ public class ProfileFragment extends Fragment {
         String substr = "Users/";
         userID = userID.substring(userID.indexOf(substr) + substr.length());
         Log.d(TAG, "initVars:" + userID);
-        storageReference = FirebaseStorage.getInstance().getReference().child("userprofile/"+userID);
+        storageReference = FirebaseStorage.getInstance().getReference().child("userprofile/" + userID);
 
     }
 
@@ -145,13 +143,13 @@ public class ProfileFragment extends Fragment {
 
         users.child("admin")
                 .get().addOnCompleteListener(task -> {
-                   if (!task.isSuccessful()){
-                       Log.d(TAG, "Error");
-                   } else if (!((Boolean) task.getResult().getValue())){
-                       Log.d(TAG, "It's not admin");
-                   } else {
-                       bind.buttonAdminPanel.setVisibility(View.VISIBLE);
-                   }
+                    if (!task.isSuccessful()) {
+                        Log.d(TAG, "Error");
+                    } else if (!((Boolean) task.getResult().getValue())) {
+                        Log.d(TAG, "It's not admin");
+                    } else {
+                        bind.buttonAdminPanel.setVisibility(View.VISIBLE);
+                    }
                 });
     }
 

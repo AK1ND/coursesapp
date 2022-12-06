@@ -2,11 +2,12 @@ package com.example.coursesapp;
 
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.coursesapp.adapters.ViewPagerAdapter;
+import com.example.coursesapp.adapters.ViewPagerAdapterAdmin;
 import com.example.coursesapp.databinding.ActivityHomeBinding;
-import com.example.coursesapp.viewpageradapters.ViewPagerAdapter;
-import com.example.coursesapp.viewpageradapters.ViewPagerAdapterAdmin;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class HomeActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public void initViewPager(){
+    public void initViewPager() {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(this);
 
@@ -42,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
         bind.tabs.getTabAt(3).setIcon(R.drawable.profile_24);
     }
 
-    public void initViewPagerAdmin(){
+    public void initViewPagerAdmin() {
         ViewPagerAdapterAdmin adapter = new ViewPagerAdapterAdmin(this);
 
         bind.viewPager2.setAdapter(adapter);

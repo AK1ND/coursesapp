@@ -1,7 +1,5 @@
 package com.example.coursesapp;
 
-import android.net.Uri;
-
 public class User {
     private String name;
     private String email;
@@ -33,7 +31,11 @@ public class User {
     }
 
 
-    public Boolean getAdmin() { return admin; }
+    public Boolean getAdmin() {
+        return admin;
+    }
 
-    public void setAdmin(Boolean admin) { this.admin = admin; }
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
 }

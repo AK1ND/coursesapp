@@ -1,4 +1,4 @@
-package com.example.coursesapp.viewpageradapters;
+package com.example.coursesapp.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,11 +7,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.coursesapp.fragments.adminfragments.CreateCourseAdminFragment;
 import com.example.coursesapp.fragments.adminfragments.NotificationsAdminFragment;
-import com.example.coursesapp.fragments.homefragments.HomeFragment;
 import com.example.coursesapp.fragments.homefragments.ProfileFragment;
 
 public class ViewPagerAdapterAdmin extends FragmentStateAdapter {
-
 
 
     public ViewPagerAdapterAdmin(@NonNull FragmentActivity fragmentActivity) {
@@ -33,6 +31,8 @@ public class ViewPagerAdapterAdmin extends FragmentStateAdapter {
     }
 
     @Override
-    public int getItemCount() { return 3; }
+    public int getItemCount() {
+        return 3;
+    }
 
 }

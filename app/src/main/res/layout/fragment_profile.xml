@@ -7,7 +7,6 @@
     tools:context=".fragments.homefragments.ProfileFragment">
 
 
-
     <TextView
         android:id="@+id/text_profile_fragment"
         android:layout_width="wrap_content"
@@ -94,8 +93,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_email"
-        app:layout_goneMarginTop="60dp"
-        app:layout_constraintVertical_bias="0.394" />
+        app:layout_constraintVertical_bias="0.394"
+        app:layout_goneMarginTop="60dp" />
 
     <TextView
         android:id="@+id/text_favorites"
@@ -128,11 +127,10 @@
         android:id="@+id/button_admin_panel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/teal_200"
         android:text="@string/admin_panel"
         android:visibility="gone"
-        android:background="@color/teal_200"
         app:layout_constraintBottom_toTopOf="@id/simple_line"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
