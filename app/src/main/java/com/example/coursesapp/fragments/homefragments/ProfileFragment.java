@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.coursesapp.HomeActivity;
 import com.example.coursesapp.MainActivity;
 import com.example.coursesapp.databinding.FragmentProfileBinding;
@@ -81,8 +82,12 @@ public class ProfileFragment extends Fragment {
         String userID = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).toString();
         String substr = "Users/";
         userID = userID.substring(userID.indexOf(substr) + substr.length());
-        Log.d(TAG, "initVars:" + userID);
+
         storageReference = FirebaseStorage.getInstance().getReference().child("userprofile/" + userID);
+
+
+
+
 
     }
 
@@ -135,11 +140,20 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-        storageReference.getBytes(512 * 512)
-                .addOnSuccessListener(bytes -> {
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    bind.imageProfile.setImageBitmap(bitmap);
-                });
+
+//        storageReference.getBytes(512 * 512)
+//                .addOnSuccessListener(bytes -> {
+//                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//                    bind.imageProfile.setImageBitmap(bitmap);
+//                });
+
+        storageReference.getDownloadUrl()
+                .addOnSuccessListener(uri ->
+                        Glide.with(requireContext())
+                        .load(uri)
+                        .into(bind.imageProfile)
+                );
+
 
         users.child("admin")
                 .get().addOnCompleteListener(task -> {

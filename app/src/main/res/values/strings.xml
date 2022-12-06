@@ -29,6 +29,7 @@
     <string name="course_name">Course Name</string>
     <string name="course_description">Course Description</string>
     <string name="search">Search</string>
+    <string name="add_to_my_courses">Add to my courses</string>
 
     <string-array name="coursesThemes">
         <item>Math</item>
