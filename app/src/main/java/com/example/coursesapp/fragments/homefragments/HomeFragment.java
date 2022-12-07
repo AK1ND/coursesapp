@@ -2,7 +2,6 @@ package com.example.coursesapp.fragments.homefragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.coursesapp.Course;
 import com.example.coursesapp.adapters.CatalogAdapter;
-import com.example.coursesapp.adapters.HomeAdapter;
 import com.example.coursesapp.databinding.FragmentHomeBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -53,7 +51,10 @@ public class HomeFragment extends Fragment {
         getUserID();
 
         recyclerView = bind.recyclerViewHome;
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users/"+userID+"/UserCourses");
+        databaseReference = FirebaseDatabase.getInstance().getReference()
+                        .child("Users")
+                                .child(userID)
+                                        .child("UserCourses");
         recyclerView.setHasFixedSize(true);
         bind.recyclerViewHome.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -83,7 +84,7 @@ public class HomeFragment extends Fragment {
     private void loadData() {
 
         list = new ArrayList<>();
-        adapter = new CatalogAdapter(requireContext(), list);
+        adapter = new CatalogAdapter(requireContext(), list, "HomeFragment");
         recyclerView.setAdapter(adapter);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,9 +95,6 @@ public class HomeFragment extends Fragment {
 
                     Course course = dataSnapshot.getValue(Course.class);
                     list.add(course);
-
-
-                    Log.d("LISTSIZE", String.valueOf(list.size()));
 
                 }
                 adapter.notifyDataSetChanged();

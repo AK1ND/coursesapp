@@ -140,13 +140,6 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-
-//        storageReference.getBytes(512 * 512)
-//                .addOnSuccessListener(bytes -> {
-//                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                    bind.imageProfile.setImageBitmap(bitmap);
-//                });
-
         storageReference.getDownloadUrl()
                 .addOnSuccessListener(uri ->
                         Glide.with(requireContext())
