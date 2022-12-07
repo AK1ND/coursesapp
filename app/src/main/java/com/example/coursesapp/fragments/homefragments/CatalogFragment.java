@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.coursesapp.Course;
 import com.example.coursesapp.adapters.CatalogAdapter;
 import com.example.coursesapp.databinding.FragmentCatalogBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,16 +25,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class CatalogFragment extends Fragment {
 
 
     private FragmentCatalogBinding bind;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference, user;
     private CatalogAdapter adapter;
     private RecyclerView recyclerView;
+    private boolean admin;
     ArrayList<Course> list;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,29 +50,48 @@ public class CatalogFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = bind.recyclerViewCatalog;
+        checkAdmin();
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Courses");
         recyclerView.setHasFixedSize(true);
         bind.recyclerViewCatalog.setLayoutManager(new LinearLayoutManager(requireContext()));
 
 
-        bind.scrollView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadData();
-                bind.scrollView.setRefreshing(false);
-            }
+        bind.scrollView.setOnRefreshListener(() -> {
+            loadData();
+            bind.scrollView.setRefreshing(false);
         });
 
 
         loadData();
     }
 
+    private void checkAdmin(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance("https://courses-app-7fc2b-default-rtdb.europe-west1.firebasedatabase.app");
+        user = firebaseDatabase.getReference("Users");
+        user = user.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+
+        user.child("admin")
+                .get().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        admin = false;
+                        Log.d("ADMINCHECK", String.valueOf(admin));
+                    } else if (!((Boolean) task.getResult().getValue())) {
+                        admin = false;
+                        Log.d("ADMINCHECK", String.valueOf(admin));
+                    } else {
+                        admin = true;
+                        Log.d("ADMINCHECK", String.valueOf(admin));
+                    }
+                });
+    }
+
 
     private void loadData() {
 
         list = new ArrayList<>();
-        adapter = new CatalogAdapter(requireContext(), list);
+        adapter = new CatalogAdapter(requireContext(), list, "CatalogFragment");
         recyclerView.setAdapter(adapter);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -79,9 +102,6 @@ public class CatalogFragment extends Fragment {
 
                     Course course = dataSnapshot.getValue(Course.class);
                     list.add(course);
-
-
-                    Log.d("LISTSIZE", String.valueOf(list.size()));
 
                 }
                 adapter.notifyDataSetChanged();

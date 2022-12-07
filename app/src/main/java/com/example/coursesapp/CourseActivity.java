@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
+
 
 import com.example.coursesapp.databinding.ActivityCourseBinding;
 import com.google.android.gms.tasks.Task;
@@ -21,7 +23,7 @@ import java.util.Objects;
 public class CourseActivity extends AppCompatActivity {
 
     private ActivityCourseBinding bind;
-    private String idCourse = "", userID, TAG = "CourseActivityLog";
+    private String idCourse = "", parentFragment , userID, TAG = "CourseActivityLog";
 
     private Task<Uri> storageReference;
     private DatabaseReference users, courses;
@@ -36,6 +38,7 @@ public class CourseActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idCourse = intent.getStringExtra("key");
+        parentFragment = intent.getStringExtra("fromFragment");
 
         initVars();
         imageLoad();
@@ -54,6 +57,8 @@ public class CourseActivity extends AppCompatActivity {
         userID = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).toString();
         String substr = "Users/";
         userID = userID.substring(userID.indexOf(substr) + substr.length());
+
+
 
     }
 
@@ -84,6 +89,30 @@ public class CourseActivity extends AppCompatActivity {
 
     private void dataLoad(){
         courses = courses.child(idCourse);
+
+        if (parentFragment.equals("HomeFragment")){
+            bind.buttonDeleteCourse.setVisibility(View.VISIBLE);
+        }
+
+
+        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                        .child("admin").get().addOnCompleteListener(task -> {
+                   if (!task.isSuccessful()){
+                       //Error
+                   } else if (!(Boolean) task.getResult().getValue()){
+                       //Not Admin
+                   }
+                   else {
+                       //Admin
+                       if (parentFragment.equals("HomeFragment")){
+                           //Come from Home Fragment
+
+                       } else {
+                           //Come from CatalogFragment
+                           bind.buttonDeleteCourseAdmin.setVisibility(View.VISIBLE);
+                       }
+                   }
+                });
 
         courses.child("name")
                 .get().addOnCompleteListener(task -> {
@@ -121,6 +150,19 @@ public class CourseActivity extends AppCompatActivity {
 
         bind.caButtonClose.setOnClickListener(view -> {
             startActivity(new Intent(this, HomeActivity.class));
+        });
+
+        bind.buttonDeleteCourse.setOnClickListener(view -> {
+            users.child(userID).child("UserCourses").child(idCourse).removeValue();
+        });
+
+        bind.buttonDeleteCourseAdmin.setOnClickListener(view -> {
+            courses.removeValue();
+        });
+
+        bind.buttonDeleteCourseAdmin.setOnLongClickListener(view -> {
+            bind.buttonDeleteCourseAdmin.setVisibility(View.GONE);
+            return true;
         });
     }
 
