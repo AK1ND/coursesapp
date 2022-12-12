@@ -95,12 +95,12 @@ public class ProfileFragment extends Fragment {
 
     private void setUserName(){
         User user = new User();
-        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("name");
+        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
         String name =  bind.etName.getText().toString();
         user.setName(name);
         user.setAdmin(admin);
         user.setEmail(bind.tvEmail.getText().toString());
-        users.setValue(user);
+        users.child("name").setValue(user);
         bind.tvName.setText(name);
     }
 
