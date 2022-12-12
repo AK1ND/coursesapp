@@ -159,13 +159,6 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-        storageReference.getDownloadUrl()
-                .addOnSuccessListener(uri ->
-                        Glide.with(requireContext())
-                        .load(uri)
-                        .into(bind.imageProfile)
-                );
-
 
         users.child("admin")
                 .get().addOnCompleteListener(task -> {
@@ -178,6 +171,13 @@ public class ProfileFragment extends Fragment {
                         bind.buttonAdminPanel.setVisibility(View.VISIBLE);
                     }
                 });
+
+        storageReference.getDownloadUrl()
+                .addOnSuccessListener(uri ->
+                        Glide.with(requireContext())
+                                .load(uri)
+                                .into(bind.imageProfile)
+                );
     }
 
 }
