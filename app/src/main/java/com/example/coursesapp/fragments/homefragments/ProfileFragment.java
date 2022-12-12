@@ -95,12 +95,12 @@ public class ProfileFragment extends Fragment {
 
     private void setUserName(){
         User user = new User();
-        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("name");
         String name =  bind.etName.getText().toString();
         user.setName(name);
         user.setAdmin(admin);
         user.setEmail(bind.tvEmail.getText().toString());
-        users.child("name").setValue(user);
+        users.setValue(user);
         bind.tvName.setText(name);
     }
 
@@ -146,6 +146,7 @@ public class ProfileFragment extends Fragment {
 
                     } else {
                         bind.tvName.setText((CharSequence) task.getResult().getValue());
+                        bind.etName.setText((CharSequence) task.getResult().getValue());
                     }
                 });
         users.child("email")
@@ -157,13 +158,6 @@ public class ProfileFragment extends Fragment {
                         bind.tvEmail.setText((CharSequence) task.getResult().getValue());
                     }
                 });
-
-        storageReference.getDownloadUrl()
-                .addOnSuccessListener(uri ->
-                        Glide.with(requireContext())
-                        .load(uri)
-                        .into(bind.imageProfile)
-                );
 
 
         users.child("admin")
@@ -177,6 +171,13 @@ public class ProfileFragment extends Fragment {
                         bind.buttonAdminPanel.setVisibility(View.VISIBLE);
                     }
                 });
+
+        storageReference.getDownloadUrl()
+                .addOnSuccessListener(uri ->
+                        Glide.with(requireContext())
+                                .load(uri)
+                                .into(bind.imageProfile)
+                );
     }
 
 }
