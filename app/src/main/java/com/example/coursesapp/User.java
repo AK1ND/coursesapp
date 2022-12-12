@@ -38,4 +38,5 @@ public class User {
     public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
+
 }
