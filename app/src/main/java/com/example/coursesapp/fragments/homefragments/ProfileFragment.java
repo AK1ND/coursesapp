@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.coursesapp.HomeActivity;
 import com.example.coursesapp.MainActivity;
+import com.example.coursesapp.User;
 import com.example.coursesapp.databinding.FragmentProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +40,7 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference users;
     private Uri imageUri;
 
+    private Boolean admin;
     private HomeActivity homeActivity;
 
     @Override
@@ -91,6 +93,17 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void setUserName(){
+        User user = new User();
+        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("name");
+        String name =  bind.etName.getText().toString();
+        user.setName(name);
+        user.setAdmin(admin);
+        user.setEmail(bind.tvEmail.getText().toString());
+        users.setValue(user);
+        bind.tvName.setText(name);
+    }
+
 
     private void buttonsClicks() {
         bind.textLogout.setOnClickListener(view -> {
@@ -102,6 +115,11 @@ public class ProfileFragment extends Fragment {
 
         bind.buttonAdminPanel.setOnClickListener(view -> {
             homeActivity.initViewPagerAdmin();
+        });
+
+        bind.etName.setOnLongClickListener(view -> {
+            setUserName();
+            return true;
         });
     }
 
@@ -155,6 +173,7 @@ public class ProfileFragment extends Fragment {
                     } else if (!((Boolean) task.getResult().getValue())) {
                         Log.d(TAG, "It's not admin");
                     } else {
+                        admin = (Boolean) task.getResult().getValue();
                         bind.buttonAdminPanel.setVisibility(View.VISIBLE);
                     }
                 });

@@ -1,7 +1,12 @@
 package com.example.coursesapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +32,9 @@ public class CourseActivity extends AppCompatActivity {
 
     private Task<Uri> storageReference;
     private DatabaseReference users, courses;
+
+    private AlertDialog.Builder builder;
+
 
 
 
@@ -141,6 +149,24 @@ public class CourseActivity extends AppCompatActivity {
 
     }
 
+    private void goToHomeActivity(){
+        startActivity(new Intent(this, HomeActivity.class));
+    }
+
+    private void createDialog(){
+        builder = new AlertDialog.Builder(this);
+        builder.setMessage("Message")
+                .setTitle("Title")
+                .setPositiveButton("Accept", (dialogInterface, i) -> {
+                    courses.removeValue();
+                    goToHomeActivity();
+                })
+                .setNegativeButton("Decline", (dialogInterface, i) -> dialogInterface.cancel());
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 
 
     private void buttonsClicks() {
@@ -157,7 +183,7 @@ public class CourseActivity extends AppCompatActivity {
         });
 
         bind.buttonDeleteCourseAdmin.setOnClickListener(view -> {
-            courses.removeValue();
+            createDialog();
         });
 
         bind.buttonDeleteCourseAdmin.setOnLongClickListener(view -> {
