@@ -79,7 +79,7 @@ public class EditUserActivity extends AppCompatActivity {
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             bind.edEmail.setError("Invalid email format");
         } else if (TextUtils.isEmpty(name)) {
-            bind.edName.setHint("Enter name");
+            bind.edName.setError("Enter name");
         } else {
             createDialog();
             user.setName(name);
@@ -143,9 +143,6 @@ public class EditUserActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-
-
     private void buttonsClicks() {
         bind.buttonSave.setOnClickListener(view -> {
             createDialog();

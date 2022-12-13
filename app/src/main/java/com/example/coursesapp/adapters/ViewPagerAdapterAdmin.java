@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.coursesapp.fragments.adminfragments.CreateCourseAdminFragment;
-import com.example.coursesapp.fragments.adminfragments.NotificationsAdminFragment;
+import com.example.coursesapp.fragments.adminfragments.UsersListAdminFragment;
 import com.example.coursesapp.fragments.homefragments.ProfileFragment;
 
 public class ViewPagerAdapterAdmin extends FragmentStateAdapter {
@@ -22,7 +22,7 @@ public class ViewPagerAdapterAdmin extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new NotificationsAdminFragment();
+                return new UsersListAdminFragment();
             case 1:
                 return new CreateCourseAdminFragment();
             default:

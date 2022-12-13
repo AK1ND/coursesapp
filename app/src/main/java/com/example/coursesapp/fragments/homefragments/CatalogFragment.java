@@ -58,9 +58,9 @@ public class CatalogFragment extends Fragment {
         bind.recyclerViewCatalog.setLayoutManager(new LinearLayoutManager(requireContext()));
 
 
-        bind.scrollView.setOnRefreshListener(() -> {
+        bind.scrollCatalogView.setOnRefreshListener(() -> {
             loadData();
-            bind.scrollView.setRefreshing(false);
+            bind.scrollCatalogView.setRefreshing(false);
         });
 
 

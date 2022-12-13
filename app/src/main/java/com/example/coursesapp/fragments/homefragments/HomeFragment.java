@@ -59,11 +59,11 @@ public class HomeFragment extends Fragment {
         bind.recyclerViewHome.setLayoutManager(new LinearLayoutManager(requireContext()));
 
 
-        bind.scrollView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        bind.scrollCatalogView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 loadData();
-                bind.scrollView.setRefreshing(false);
+                bind.scrollCatalogView.setRefreshing(false);
             }
         });
 

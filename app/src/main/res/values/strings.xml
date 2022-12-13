@@ -32,6 +32,9 @@
     <string name="add_to_my_courses">Add to my courses</string>
     <string name="save">Save</string>
     <string name="edit">Edit</string>
+    <string name="users">Users</string>
+    <string name="user_name">User Name</string>
+    <string name="user_email">User Email</string>
 
     <string-array name="coursesThemes">
         <item>Math</item>
