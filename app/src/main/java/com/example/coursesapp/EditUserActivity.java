@@ -136,6 +136,7 @@ public class EditUserActivity extends AppCompatActivity {
                 .setTitle("Are you sure you want to edit your profile?")
                 .setPositiveButton("Accept", (dialogInterface, i) -> {
                     setUserEdit();
+                    dialogInterface.cancel();
                 })
                 .setNegativeButton("Decline", (dialogInterface, i) -> dialogInterface.cancel());
 
@@ -147,7 +148,7 @@ public class EditUserActivity extends AppCompatActivity {
 
     private void buttonsClicks() {
         bind.buttonSave.setOnClickListener(view -> {
-            setUserEdit();
+            createDialog();
         });
 
         bind.euImageView.setOnClickListener(view -> imageLoad());
