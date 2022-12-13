@@ -65,9 +65,6 @@ public class CourseActivity extends AppCompatActivity {
         userID = users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).toString();
         String substr = "Users/";
         userID = userID.substring(userID.indexOf(substr) + substr.length());
-
-
-
     }
 
     private void uploadData(){

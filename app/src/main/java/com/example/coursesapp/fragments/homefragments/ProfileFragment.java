@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.coursesapp.EditUserActivity;
 import com.example.coursesapp.HomeActivity;
 import com.example.coursesapp.MainActivity;
 import com.example.coursesapp.User;
@@ -87,10 +88,6 @@ public class ProfileFragment extends Fragment {
 
         storageReference = FirebaseStorage.getInstance().getReference().child("userprofile/" + userID);
 
-
-
-
-
     }
 
     private void setUserName(){
@@ -109,6 +106,10 @@ public class ProfileFragment extends Fragment {
         bind.textLogout.setOnClickListener(view -> {
             firebaseAuth.signOut();
             startActivity(new Intent(requireActivity(), MainActivity.class));
+        });
+
+        bind.textSettings.setOnClickListener(view -> {
+            startActivity(new Intent(requireActivity(), EditUserActivity.class));
         });
 
         bind.imageProfile.setOnClickListener(view -> getPhoto.launch("image/*"));

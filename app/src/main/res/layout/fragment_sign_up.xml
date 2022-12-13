@@ -28,7 +28,8 @@
         android:background="@drawable/ic_baseline_close_24"
         app:layout_constraintBottom_toBottomOf="@id/text_sign_up_fragment"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/text_sign_up_fragment" />
+        app:layout_constraintTop_toTopOf="@id/text_sign_up_fragment"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/text_logIn_sign_up_fragment"
@@ -59,7 +60,7 @@
     <EditText
         android:id="@+id/et_name_sign_up_fragment"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="160dp"
         android:layout_marginEnd="20dp"
@@ -75,7 +76,7 @@
     <EditText
         android:id="@+id/et_email_sign_up_fragment"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
@@ -92,7 +93,7 @@
     <EditText
         android:id="@+id/et_password_sigh_up_fragment"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"

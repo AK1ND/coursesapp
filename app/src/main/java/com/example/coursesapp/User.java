@@ -8,12 +8,6 @@ public class User {
     public User() {
     }
 
-//    public User(String name, String email, Boolean admin) {
-//        this.name = name;
-//        this.email = email;
-//        this.admin = admin;
-//    }
-
     public String getName() {
         return name;
     }

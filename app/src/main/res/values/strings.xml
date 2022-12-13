@@ -30,6 +30,8 @@
     <string name="course_description">Course Description</string>
     <string name="search">Search</string>
     <string name="add_to_my_courses">Add to my courses</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
 
     <string-array name="coursesThemes">
         <item>Math</item>

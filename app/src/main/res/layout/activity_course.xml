@@ -25,17 +25,22 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/camera_24"
+        android:background="@drawable/roundededittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ca_button_close" />
+        app:layout_constraintTop_toBottomOf="@+id/ca_button_close"
+        app:srcCompat="@mipmap/ic_launcher_foreground"
+        tools:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/ca_courseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_semibold"
         android:text="@string/course_name"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ca_imageView" />
 
@@ -43,7 +48,10 @@
         android:id="@+id/ca_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_medium"
         android:text="Theme"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/ca_courseName"
         app:layout_constraintTop_toBottomOf="@id/ca_courseName" />
 
@@ -62,7 +70,9 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:fontFamily="@font/inter_medium"
             android:text="@string/course_description"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

@@ -14,7 +14,8 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/ic_baseline_close_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
     <ImageView
@@ -24,17 +25,23 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@drawable/camera_24"
+        android:background="@drawable/roundededittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_button_close" />
+        app:layout_constraintTop_toBottomOf="@+id/img_button_close"
+        tools:srcCompat="@drawable/camera_24" />
 
     <EditText
         android:id="@+id/et_course_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/roundededittext"
+        android:fontFamily="@font/inter_medium"
         android:hint="@string/enter_name_of_the_course"
+        android:minHeight="48dp"
+        android:paddingStart="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imgview_course" />
 
@@ -43,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/coursesThemes"
+        android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="@id/et_course_name"
         app:layout_constraintTop_toBottomOf="@id/et_course_name" />
 
@@ -61,7 +69,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:background="@drawable/roundededittext"
+            android:fontFamily="@font/inter_medium"
             android:hint="@string/enter_description"
+            android:minHeight="48dp"
+            android:paddingStart="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
