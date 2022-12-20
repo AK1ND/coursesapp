@@ -1,13 +1,12 @@
 package com.example.coursesapp;
 
-
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.coursesapp.adapters.ViewPagerAdapter;
-import com.example.coursesapp.adapters.ViewPagerAdapterAdmin;
+import com.example.coursesapp.Adapters.ViewPagerAdapter;
+import com.example.coursesapp.Adapters.ViewPagerAdapterAdmin;
 import com.example.coursesapp.databinding.ActivityHomeBinding;
+
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class HomeActivity extends AppCompatActivity {
@@ -22,8 +21,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(bind.getRoot());
 
         initViewPager();
-
-
     }
 
 
@@ -39,8 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 
         bind.tabs.getTabAt(0).setIcon(R.drawable.ic_home_black_24dp);
         bind.tabs.getTabAt(1).setIcon(R.drawable.ic_dashboard_black_24dp);
-        bind.tabs.getTabAt(2).setIcon(R.drawable.ic_notifications_black_24dp);
-        bind.tabs.getTabAt(3).setIcon(R.drawable.profile_24);
+        bind.tabs.getTabAt(2).setIcon(R.drawable.profile_24);
     }
 
     public void initViewPagerAdmin() {
@@ -52,9 +48,8 @@ public class HomeActivity extends AppCompatActivity {
                 (tab, position) -> {
                 }).attach();
 
-        bind.tabs.getTabAt(0).setIcon(R.drawable.ic_notifications_black_24dp);
         bind.tabs.getTabAt(1).setIcon(R.drawable.ic_dashboard_black_24dp);
-        bind.tabs.getTabAt(2).setIcon(R.drawable.profile_24);
+        bind.tabs.getTabAt(0).setIcon(R.drawable.profile_24);
 
     }
 }

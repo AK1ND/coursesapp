@@ -1,8 +1,7 @@
 package com.example.coursesapp.fragments.homefragments;
 
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,8 +19,8 @@ import com.bumptech.glide.Glide;
 import com.example.coursesapp.EditUserActivity;
 import com.example.coursesapp.HomeActivity;
 import com.example.coursesapp.MainActivity;
-import com.example.coursesapp.User;
 import com.example.coursesapp.databinding.FragmentProfileBinding;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,6 +39,8 @@ public class ProfileFragment extends Fragment {
     private StorageReference storageReference;
     private DatabaseReference users;
     private Uri imageUri;
+
+    private AlertDialog.Builder builder;
 
     private Boolean admin;
     private HomeActivity homeActivity;
@@ -90,22 +91,35 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void setUserName(){
-        User user = new User();
-        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("name");
-        String name =  bind.etName.getText().toString();
-        user.setName(name);
-        user.setAdmin(admin);
-        user.setEmail(bind.tvEmail.getText().toString());
-        users.setValue(user);
-        bind.tvName.setText(name);
+//    private void setUserName(){
+//        User user = new User();
+//        users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("name");
+//        String name =  bind.etName.getText().toString();
+//        user.setName(name);
+//        user.setAdmin(admin);
+//        user.setEmail(bind.tvEmail.getText().toString());
+//        users.setValue(user);
+//        bind.tvName.setText(name);
+//    }
+
+    private void createLogoutDialog(){
+        builder = new AlertDialog.Builder(homeActivity);
+        builder.setMessage("Are you sure you want to logout?")
+                //.setTitle("Title")
+                .setPositiveButton("Exit", (dialogInterface, i) -> {
+                    firebaseAuth.signOut();
+                    startActivity(new Intent(requireActivity(), MainActivity.class));
+                })
+                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 
     private void buttonsClicks() {
         bind.textLogout.setOnClickListener(view -> {
-            firebaseAuth.signOut();
-            startActivity(new Intent(requireActivity(), MainActivity.class));
+            createLogoutDialog();
         });
 
         bind.textSettings.setOnClickListener(view -> {
@@ -116,11 +130,6 @@ public class ProfileFragment extends Fragment {
 
         bind.buttonAdminPanel.setOnClickListener(view -> {
             homeActivity.initViewPagerAdmin();
-        });
-
-        bind.etName.setOnLongClickListener(view -> {
-            setUserName();
-            return true;
         });
     }
 
@@ -147,7 +156,6 @@ public class ProfileFragment extends Fragment {
 
                     } else {
                         bind.tvName.setText((CharSequence) task.getResult().getValue());
-                        bind.etName.setText((CharSequence) task.getResult().getValue());
                     }
                 });
         users.child("email")

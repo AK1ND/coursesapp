@@ -9,11 +9,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.example.coursesapp.data.User;
 import com.example.coursesapp.databinding.ActivityEditUserBinding;
+
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -76,18 +77,21 @@ public class EditUserActivity extends AppCompatActivity {
         users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).child("name");
         String name =  bind.edName.getText().toString();
         String email =  bind.edEmail.getText().toString();
+        boolean key = false;
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             bind.edEmail.setError("Invalid email format");
         } else if (TextUtils.isEmpty(name)) {
             bind.edName.setError("Enter name");
         } else {
-            createDialog();
+            createEditDialog();
             user.setName(name);
             user.setAdmin(admin);
             user.setEmail(email);
             users.setValue(user);
             bind.tvEdname.setText(name);
             bind.tvEdemail.setText(email);
+            startActivity(new Intent(this, HomeActivity.class));
+            Toast.makeText(getApplicationContext(), "Profile edited", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -130,22 +134,23 @@ public class EditUserActivity extends AppCompatActivity {
         startActivity(new Intent(this, HomeActivity.class));
     }
 
-    private void createDialog(){
+    private void createEditDialog(){
         builder = new AlertDialog.Builder(this);
-        builder.setMessage("Warning")
-                .setTitle("Are you sure you want to edit your profile?")
-                .setPositiveButton("Accept", (dialogInterface, i) -> {
+        builder.setTitle("Are you sure you want to edit your profile?")
+                .setPositiveButton("OK", (dialogInterface, i) -> {
                     setUserEdit();
                     dialogInterface.cancel();
                 })
-                .setNegativeButton("Decline", (dialogInterface, i) -> dialogInterface.cancel());
+                .setNegativeButton("Cancel", (dialogInterface, i) -> {
+                    dialogInterface.cancel();
+                });
 
         AlertDialog alert = builder.create();
         alert.show();
     }
     private void buttonsClicks() {
         bind.buttonSave.setOnClickListener(view -> {
-            createDialog();
+            createEditDialog();
         });
 
         bind.euImageView.setOnClickListener(view -> imageLoad());

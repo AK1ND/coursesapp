@@ -1,4 +1,4 @@
-package com.example.coursesapp;
+package com.example.coursesapp.data;
 
 import com.google.firebase.database.Exclude;
 

@@ -1,4 +1,4 @@
-package com.example.coursesapp.adapters;
+package com.example.coursesapp.Adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -7,7 +7,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.coursesapp.fragments.homefragments.CatalogFragment;
 import com.example.coursesapp.fragments.homefragments.HomeFragment;
-import com.example.coursesapp.fragments.homefragments.NotificationsFragment;
 import com.example.coursesapp.fragments.homefragments.ProfileFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
@@ -26,8 +25,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
                 return new HomeFragment();
             case 1:
                 return new CatalogFragment();
-            case 2:
-                return new NotificationsFragment();
             default:
                 return new ProfileFragment();
         }
@@ -35,6 +32,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 3;
     }
 }

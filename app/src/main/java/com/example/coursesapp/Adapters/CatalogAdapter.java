@@ -1,8 +1,7 @@
-package com.example.coursesapp.adapters;
+package com.example.coursesapp.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.coursesapp.Course;
+import com.example.coursesapp.data.Course;
 import com.example.coursesapp.CourseActivity;
-import com.example.coursesapp.HomeActivity;
 import com.example.coursesapp.R;
-import com.example.coursesapp.User;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,15 +24,15 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class UsersListAdminAdapter extends RecyclerView.Adapter<UsersListAdminAdapter.UserListAdminViewHolder> {
+public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogViewHolder> {
 
     Context context;
 
-    ArrayList<User> list;
+    ArrayList<Course> list;
 
     String fromFragment;
 
-    public UsersListAdminAdapter(Context context, ArrayList<User> list, String fromFragment) {
+    public CatalogAdapter(Context context, ArrayList<Course> list, String fromFragment) {
         this.context = context;
         this.list = list;
         this.fromFragment = fromFragment;
@@ -43,24 +40,23 @@ public class UsersListAdminAdapter extends RecyclerView.Adapter<UsersListAdminAd
 
     @NonNull
     @Override
-    public UsersListAdminAdapter.UserListAdminViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.recycler_users, parent, false);
+    public CatalogViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(context).inflate(R.layout.recycler_catalog, parent, false);
 
-        return new UsersListAdminAdapter.UserListAdminViewHolder(v);
+        return new CatalogViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UsersListAdminAdapter.UserListAdminViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CatalogViewHolder holder, int position) {
 
 
-        User user = list.get(position);
-        holder.name.setText(user.getName());
-        holder.email.setText(user.getEmail());
+        Course course = list.get(position);
+        holder.name.setText(course.getName());
+        holder.description.setText(course.getDescription());
 
-        String userID = user.getId();
+        String idCourse = course.getId();
 
-
-        holder.storageReference.child("userprofile/" + userID).getDownloadUrl()
+        holder.storageReference.child("coursesimages/" + idCourse).getDownloadUrl()
                 .addOnSuccessListener(uri ->
                         Glide.with(context)
                                 .load(uri)
@@ -68,11 +64,11 @@ public class UsersListAdminAdapter extends RecyclerView.Adapter<UsersListAdminAd
                 )
                 .addOnFailureListener(e -> {
                 });
-
+        // TODO:Вот эту хуйню -->
         holder.cardView.setOnClickListener(view -> {
 
             Intent intent = new Intent(context, CourseActivity.class);
-            intent.putExtra("key", userID);
+            intent.putExtra("key", idCourse);
             intent.putExtra("fromFragment", fromFragment);
             context.startActivity(intent);
 
@@ -85,20 +81,20 @@ public class UsersListAdminAdapter extends RecyclerView.Adapter<UsersListAdminAd
         return list.size();
     }
 
-    public static class UserListAdminViewHolder extends RecyclerView.ViewHolder {
+    public static class CatalogViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name, email;
+        TextView name, description;
         ImageView imageView;
         StorageReference storageReference;
         CardView cardView;
         DatabaseReference databaseReference;
 
 
-        public UserListAdminViewHolder (@NonNull View itemView) {
+        public CatalogViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.tv_user_name);
-            email = itemView.findViewById(R.id.tv_user_email);
+            name = itemView.findViewById(R.id.tv_courseName);
+            description = itemView.findViewById(R.id.tv_description);
             imageView = itemView.findViewById(R.id.imgView_course);
             storageReference = FirebaseStorage.getInstance().getReference();
             databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -106,5 +102,6 @@ public class UsersListAdminAdapter extends RecyclerView.Adapter<UsersListAdminAd
 
         }
     }
+
 
 }

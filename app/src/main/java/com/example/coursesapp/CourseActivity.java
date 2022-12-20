@@ -1,12 +1,8 @@
 package com.example.coursesapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,8 +11,9 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 
-
+import com.example.coursesapp.data.Course;
 import com.example.coursesapp.databinding.ActivityCourseBinding;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -34,8 +31,6 @@ public class CourseActivity extends AppCompatActivity {
     private DatabaseReference users, courses;
 
     private AlertDialog.Builder builder;
-
-
 
 
     @Override
@@ -150,15 +145,29 @@ public class CourseActivity extends AppCompatActivity {
         startActivity(new Intent(this, HomeActivity.class));
     }
 
-    private void createDialog(){
+    private void createUploadDialog(){
         builder = new AlertDialog.Builder(this);
-        builder.setMessage("Message")
-                .setTitle("Title")
-                .setPositiveButton("Accept", (dialogInterface, i) -> {
+        builder.setMessage("Are you sure you want to delete?")
+                //.setTitle("Title")
+                .setPositiveButton("Delete", (dialogInterface, i) -> {
                     courses.removeValue();
                     goToHomeActivity();
                 })
-                .setNegativeButton("Decline", (dialogInterface, i) -> dialogInterface.cancel());
+                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void createDeleteDialog(){
+        builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to add the course to your list?")
+                //.setTitle("Title")
+                .setPositiveButton("Add", (dialogInterface, i) -> {
+                    uploadData();
+                    goToHomeActivity();
+                })
+                .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.cancel());
 
         AlertDialog alert = builder.create();
         alert.show();
@@ -168,19 +177,18 @@ public class CourseActivity extends AppCompatActivity {
 
     private void buttonsClicks() {
         bind.buttonAddToHome.setOnClickListener(view -> {
-            uploadData();
+            createDeleteDialog();
         });
 
         bind.caButtonClose.setOnClickListener(view -> {
             startActivity(new Intent(this, HomeActivity.class));
         });
-
         bind.buttonDeleteCourse.setOnClickListener(view -> {
             users.child(userID).child("UserCourses").child(idCourse).removeValue();
         });
 
         bind.buttonDeleteCourseAdmin.setOnClickListener(view -> {
-            createDialog();
+            createDeleteDialog();
         });
 
         bind.buttonDeleteCourseAdmin.setOnLongClickListener(view -> {

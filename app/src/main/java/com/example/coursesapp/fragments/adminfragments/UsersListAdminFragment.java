@@ -12,9 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coursesapp.User;
-import com.example.coursesapp.adapters.UsersListAdminAdapter;
+import com.example.coursesapp.data.User;
+import com.example.coursesapp.Adapters.UsersListAdminAdapter;
 import com.example.coursesapp.databinding.FragmentUsersListAdminBinding;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,6 +41,7 @@ public class UsersListAdminFragment extends Fragment {
         bind = FragmentUsersListAdminBinding.inflate(inflater, container, false);
         return bind.getRoot();
     }
+    //TODO: Выход из профиля админа
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
