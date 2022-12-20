@@ -1,9 +1,7 @@
-package com.example.coursesapp.adapters;
-
+package com.example.coursesapp.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +13,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.coursesapp.Course;
+import com.example.coursesapp.data.Course;
 import com.example.coursesapp.CourseActivity;
-import com.example.coursesapp.HomeActivity;
 import com.example.coursesapp.R;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -58,7 +56,6 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogV
 
         String idCourse = course.getId();
 
-
         holder.storageReference.child("coursesimages/" + idCourse).getDownloadUrl()
                 .addOnSuccessListener(uri ->
                         Glide.with(context)
@@ -67,7 +64,7 @@ public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.CatalogV
                 )
                 .addOnFailureListener(e -> {
                 });
-
+        // TODO:Вот эту хуйню -->
         holder.cardView.setOnClickListener(view -> {
 
             Intent intent = new Intent(context, CourseActivity.class);

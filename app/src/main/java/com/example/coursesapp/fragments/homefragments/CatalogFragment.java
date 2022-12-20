@@ -12,11 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.coursesapp.Course;
-import com.example.coursesapp.adapters.CatalogAdapter;
+import com.example.coursesapp.data.Course;
+import com.example.coursesapp.Adapters.CatalogAdapter;
 import com.example.coursesapp.databinding.FragmentCatalogBinding;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +30,7 @@ import java.util.Objects;
 
 public class CatalogFragment extends Fragment {
 
-
+    private final String TAG = "catalogFragmentLog";
     private FragmentCatalogBinding bind;
     private DatabaseReference databaseReference, user;
     private CatalogAdapter adapter;
@@ -42,27 +42,24 @@ public class CatalogFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         bind = FragmentCatalogBinding.inflate(inflater, container, false);
+        buttonsClicks();
         return bind.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         recyclerView = bind.recyclerViewCatalog;
         checkAdmin();
-
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Courses");
         recyclerView.setHasFixedSize(true);
         bind.recyclerViewCatalog.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-
-        bind.scrollView.setOnRefreshListener(() -> {
+        bind.scrollCatalogView.setOnRefreshListener(() -> {
             loadData();
-            bind.scrollView.setRefreshing(false);
+            bind.scrollCatalogView.setRefreshing(false);
         });
-
 
         loadData();
     }
@@ -87,6 +84,31 @@ public class CatalogFragment extends Fragment {
                 });
     }
 
+    private void searchByName() {
+        list = new ArrayList<>();
+        adapter = new CatalogAdapter(requireContext(), list, "CatalogFragment");
+        recyclerView.setAdapter(adapter);
+        String search_name = bind.search.getText().toString();
+
+        databaseReference.orderByChild("name").startAt(search_name).endAt(search_name+"\uf8ff").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Course course = dataSnapshot.getValue(Course.class);
+                            list.add(course);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                    }
+                }
+        );
+    }
 
     private void loadData() {
 
@@ -111,9 +133,13 @@ public class CatalogFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
+    }
 
+    private void buttonsClicks(){
+        bind.searchButtonCatalog.setOnClickListener(view -> {
+            searchByName();
+        });
     }
 
 }

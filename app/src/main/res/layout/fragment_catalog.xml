@@ -22,27 +22,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/tv_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="@string/filter"
-        android:textColor="@color/teal_200"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_home_fragment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/text_home_fragment" />
-
-
     <EditText
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="80dp"
         android:background="@drawable/roundedsearch"
         android:fontFamily="@font/inter_medium"
         android:hint="@string/search"
@@ -55,7 +41,7 @@
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollCatalogView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,5 +55,23 @@
             android:layout_height="wrap_content" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/search_button_catalog"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/roundedbutton"
+        android:src="?android:attr/actionModeWebSearchDrawable"
+        android:tint="@color/ic_launcher_background"
+        app:icon="?android:attr/actionModeWebSearchDrawable"
+        app:iconPadding="0dp"
+        app:iconTintMode="src_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/text_home_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/text_home_fragment"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

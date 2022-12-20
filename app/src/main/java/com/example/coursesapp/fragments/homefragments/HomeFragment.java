@@ -2,6 +2,7 @@ package com.example.coursesapp.fragments.homefragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.coursesapp.Course;
-import com.example.coursesapp.adapters.CatalogAdapter;
+import com.example.coursesapp.data.Course;
+import com.example.coursesapp.Adapters.CatalogAdapter;
 import com.example.coursesapp.databinding.FragmentHomeBinding;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,6 +43,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         bind = FragmentHomeBinding.inflate(inflater, container, false);
+        buttonsClicks();
         return bind.getRoot();
     }
 
@@ -59,11 +62,11 @@ public class HomeFragment extends Fragment {
         bind.recyclerViewHome.setLayoutManager(new LinearLayoutManager(requireContext()));
 
 
-        bind.scrollView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        bind.scrollCatalogView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 loadData();
-                bind.scrollView.setRefreshing(false);
+                bind.scrollCatalogView.setRefreshing(false);
             }
         });
 
@@ -80,6 +83,30 @@ public class HomeFragment extends Fragment {
         userID = userID.substring(userID.indexOf(substr) + substr.length());
     }
 
+    private void searchByName() {
+        list = new ArrayList<>();
+        adapter = new CatalogAdapter(requireContext(), list, "HomeFragment");
+        recyclerView.setAdapter(adapter);
+        String search_name = bind.search.getText().toString();
+        databaseReference.orderByChild("name").startAt(search_name).endAt(search_name + "\uf8ff").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @SuppressLint("NotifyDataSetChanged")
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Course course = dataSnapshot.getValue(Course.class);
+                            list.add(course);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                }
+        );
+    }
 
     private void loadData() {
 
@@ -106,7 +133,12 @@ public class HomeFragment extends Fragment {
             }
 
         });
+    }
+        private void buttonsClicks(){
+            bind.searchButtonHome.setOnClickListener(view -> {
+                searchByName();
+            });
+        }
 
     }
 
-}

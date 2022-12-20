@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.coursesapp.Course;
+import com.example.coursesapp.data.Course;
 import com.example.coursesapp.databinding.FragmentCreateCourseBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -43,7 +43,7 @@ public class CreateCourseAdminFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         bind = FragmentCreateCourseBinding.inflate(inflater, container, false);
-
+    //TODO: Выход из профиля админа
         getPhoto = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 result -> {
@@ -124,7 +124,7 @@ public class CreateCourseAdminFragment extends Fragment {
 
     }
 
-
+    //TODO: Предупреждение на создание
     private void createCourse() {
 
         theme = bind.spinner.getSelectedItem().toString();
@@ -135,6 +135,7 @@ public class CreateCourseAdminFragment extends Fragment {
         if (checkFillFields()) {
             uploadImg();
             uploadData();
+            Toast.makeText(requireContext(), "Course created", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(requireContext(), "Fill in all the fields", Toast.LENGTH_SHORT).show();
         }

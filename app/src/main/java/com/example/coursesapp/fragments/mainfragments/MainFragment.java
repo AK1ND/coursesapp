@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.example.coursesapp.HomeActivity;
 import com.example.coursesapp.R;
 import com.example.coursesapp.databinding.FragmentMainBinding;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

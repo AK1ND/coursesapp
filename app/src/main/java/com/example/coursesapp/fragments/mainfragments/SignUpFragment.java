@@ -16,8 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.coursesapp.HomeActivity;
 import com.example.coursesapp.R;
-import com.example.coursesapp.User;
+import com.example.coursesapp.data.User;
 import com.example.coursesapp.databinding.FragmentSignUpBinding;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

@@ -1,18 +1,16 @@
-package com.example.coursesapp;
+package com.example.coursesapp.data;
+
+import com.google.firebase.database.Exclude;
 
 public class User {
+    @Exclude
+    private String id;
     private String name;
     private String email;
     private Boolean admin;
 
     public User() {
     }
-
-//    public User(String name, String email, Boolean admin) {
-//        this.name = name;
-//        this.email = email;
-//        this.admin = admin;
-//    }
 
     public String getName() {
         return name;
@@ -39,4 +37,11 @@ public class User {
         this.admin = admin;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
